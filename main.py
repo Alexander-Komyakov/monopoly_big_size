@@ -14,6 +14,7 @@ import vga1_bold_16x32 as font
 
 class Game:
     def __init__(self):
+        self.COLOR_BG = st7789.color565(20, 120, 40)
         self.players = [1500, 1500, 1500, 1500, 1500, 1500, 1500, 1500]
         self.players_rfid = {"36046426852801050": 0, "36046426852800790": 1, "36046426852800540": 2, "36046426852800280": 3, "36046426852800020": 4, "36046426852799770": 5, "36046426852799510": 6, "36046426852799260": 7}
         
@@ -138,7 +139,7 @@ class Game:
                         self.show_trade(self.number)
                     if self.state_game == "setRfid":
                         self.number = key_pressed
-                        self.tft.text(font, f"{self.number}", 80, 100, st7789.color565(255,255,255), st7789.color565(0,0,0))
+                        self.tft.text(font, f"{self.number}", 80, 100, st7789.color565(255,255,255), self.COLOR_BG)
                 if key_pressed == "A": #approve
                     if self.state_game == "setRfid":
                         if self.number in ("1", "2", "3", "4", "5", "6", "7", "8"):
@@ -242,51 +243,51 @@ class Game:
                         else:
                             self.show_score_one(player_id)
                     else:
-                        self.tft.fill(st7789.BLACK)
-                        self.tft.text(font, "Type number", 10, 20, st7789.color565(255,255,255), st7789.color565(0,0,0))
-                        self.tft.text(font, "new player", 10, 60, st7789.color565(255,255,255), st7789.color565(0,0,0))
-                        self.tft.text(font, "1-8:", 10, 100, st7789.color565(255,255,255), st7789.color565(0,0,0))
+                        self.tft.fill(self.COLOR_BG)
+                        self.tft.text(font, "Type number", 10, 20, st7789.color565(255,255,255), self.COLOR_BG)
+                        self.tft.text(font, "new player", 10, 60, st7789.color565(255,255,255), self.COLOR_BG)
+                        self.tft.text(font, "1-8:", 10, 100, st7789.color565(255,255,255), self.COLOR_BG)
                         self.state_game = "setRfid"
                         self.save_rfid = rfid_card
     
     def show_score_all(self):
-        self.tft.fill(st7789.BLACK)
+        self.tft.fill(self.COLOR_BG)
         for i in range(0, 8):
-            self.tft.text(font, f"{i+1}: {self.players[i]}", 10, i*40, st7789.color565(255,255,255), st7789.color565(0,0,0))
+            self.tft.text(font, f"{i+1}: {self.players[i]}", 10, i*40, st7789.color565(255,255,255), self.COLOR_BG)
     
     def show_score_one(self, player):
-        self.tft.fill(st7789.BLACK)
+        self.tft.fill(self.COLOR_BG)
         for i in range(0, 8):
             if player == i:
-                self.tft.text(font, f"{i+1}: {self.players[i]}", 10, i*40, st7789.color565(0,255,255), st7789.color565(0,0,0))
+                self.tft.text(font, f"{i+1}: {self.players[i]}", 10, i*40, st7789.color565(0,255,255), self.COLOR_BG)
             else:
-                self.tft.text(font, f"{i+1}: {self.players[i]}", 10, i*40, st7789.color565(255,255,255), st7789.color565(0,0,0))
+                self.tft.text(font, f"{i+1}: {self.players[i]}", 10, i*40, st7789.color565(255,255,255), self.COLOR_BG)
         
     def show_score_one_number(self, number):
-        self.tft.fill(st7789.BLACK)
+        self.tft.fill(self.COLOR_BG)
         if number > 99999:
-            self.tft.text(font, str(number), 10, 20, st7789.color565(255,255,255), st7789.color565(0,0,0))
+            self.tft.text(font, str(number), 10, 20, st7789.color565(255,255,255), self.COLOR_BG)
         else:    
-            self.tft.text(font, str(number), 10, 20, st7789.color565(255,255,255), st7789.color565(0,0,0))
+            self.tft.text(font, str(number), 10, 20, st7789.color565(255,255,255), self.COLOR_BG)
     
     def show_trade(self, number):
-        self.tft.fill(st7789.BLACK)
-        self.tft.text(font, f"T{number}", 10, 20, st7789.color565(255,255,255), st7789.color565(0,0,0))
+        self.tft.fill(self.COLOR_BG)
+        self.tft.text(font, f"T{number}", 10, 20, st7789.color565(255,255,255), self.COLOR_BG)
     
     def show_plus(self, number):
-        self.tft.fill(st7789.BLACK)
-        self.tft.text(font, f"+{number}", 10, 20, st7789.color565(255,255,255), st7789.color565(0,0,0))
+        self.tft.fill(self.COLOR_BG)
+        self.tft.text(font, f"+{number}", 10, 20, st7789.color565(255,255,255), self.COLOR_BG)
     
     def show_minus(self, number):
-        self.tft.fill(st7789.BLACK)
-        self.tft.text(font, f"-{number}", 10, 20, st7789.color565(255,255,255), st7789.color565(0,0,0))
+        self.tft.fill(self.COLOR_BG)
+        self.tft.text(font, f"-{number}", 10, 20, st7789.color565(255,255,255), self.COLOR_BG)
     
     def show_not_enough(self, number):
-        self.tft.fill(st7789.BLACK)
+        self.tft.fill(self.COLOR_BG)
         if int(self.number[:-1]) > 9999:
-            self.tft.text(font, f"NO {number}", 10, 20, st7789.color565(255,255,255), st7789.color565(0,0,0))
+            self.tft.text(font, f"NO {number}", 10, 20, st7789.color565(255,255,255), self.COLOR_BG)
         else:
-            self.tft.text(font, f"NO {number}", 10, 20, st7789.color565(255,255,255), st7789.color565(0,0,0))
+            self.tft.text(font, f"NO {number}", 10, 20, st7789.color565(255,255,255), self.COLOR_BG)
 
 game = Game()
 game.run_game()
